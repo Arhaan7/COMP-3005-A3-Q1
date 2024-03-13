@@ -22,4 +22,4 @@ the play button on the top of the page to create the tables and insert them with
 Testing Instructions: 
 The menu instructions will prompt you what to do and prompt you when user input is needed. 
 
-Youtube Video Link: TBD
+Youtube Video Link: https://youtu.be/koGBMKMYXyg
