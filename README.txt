@@ -22,4 +22,4 @@ the play button on the top of the page to create the tables and insert them with
 Testing Instructions: 
 The menu instructions will prompt you what to do and prompt you when user input is needed. 
 
-Youtube Video Link: https://youtu.be/koGBMKMYXyg (Please not that try and except error catching was added on after the video but everything still works the same)
+Youtube Video Link: https://youtu.be/koGBMKMYXyg (Please note that try and except error catching was added on after the video was made but everything still works the same)
