@@ -6,82 +6,99 @@ from psycopg2 import sql
 
 # Connect to an existing database
 def connect():
-    #connect to the database
-    conn = psycopg2.connect(
-        # loading all the information to connect to the database
-        # TAs please change the user and password to your own to test the code
-        user="postgres",
-        password="carleton",
-        host="localhost",
-        port = "5432",
-        database="Question1_A3"
-    )
-    return conn
-
+    try:
+        #connect to the database
+        conn = psycopg2.connect(
+            # loading all the information to connect to the database
+            # TAs please change the user and password to your own to test the code
+            user="postgres",
+            password="carleton",
+            host="localhost",
+            port = "5432",
+            database="Question1_A3"
+        )
+        return conn
+    except (psycopg2.DatabaseError, Exception) as e:
+        print(f"Error while connecting to the database: {e}")
 
 # function that gets all the students from the database
 def getAllStudents():
-    #connect to the database
-    conn = connect()
-    #create a cursor object
-    cur = conn.cursor()
-    #execute a SELECT statement
-    cur.execute("SELECT * FROM students")
-    #retrieve the results
-    rows = cur.fetchall()
-    #print the results
-    for row in rows:
-        print(row)
-    #close the cursor and the connection
-    cur.close()
-    conn.close()
+    try:
+        #connect to the database
+        conn = connect()
+        #create a cursor object
+        cur = conn.cursor()
+        #execute a SELECT statement
+        cur.execute("SELECT * FROM students")
+        #retrieve the results
+        rows = cur.fetchall()
+        #print the results
+        for row in rows:
+            print(row)
+    except psycopg2.Error as e:
+        print(f"Error while fetching data from the database: {e}")
+    finally:
+        #close the cursor and the connection
+        cur.close()
+        conn.close()
 
 # function that adds a student to the database
 def addStudent(first_name, last_name, email, enrollment_date):
-    #connect to the database
-    conn = connect()
-    #create a cursor object
-    cur = conn.cursor()
-    #execute an INSERT statement
-    cur.execute("INSERT INTO students (first_name, last_name, email, enrollment_date) VALUES (%s, %s, %s, %s)", (first_name, last_name, email, enrollment_date))
-    #commit the transaction
-    conn.commit()
-    #close the cursor and the connection
-    cur.close()
-    conn.close()
+    try:
+        #connect to the database
+        conn = connect()
+        #create a cursor object
+        cur = conn.cursor()
+        #execute an INSERT statement
+        cur.execute("INSERT INTO students (first_name, last_name, email, enrollment_date) VALUES (%s, %s, %s, %s)", (first_name, last_name, email, enrollment_date))
+        #commit the transaction
+        conn.commit()
+    except psycopg2.Error as e:
+        print(f"Error while inserting data into the database: {e}")
+    finally:
+        #close the cursor and the connection
+        cur.close()
+        conn.close()
 
 # function that updates a student's email in the database
 def updateStudentEmail(student_id, email):
-    #connect to the database
-    conn = connect()
-    #create a cursor object
-    cur = conn.cursor()
-    #execute an UPDATE statement
-    cur.execute("UPDATE students SET email = %s WHERE student_id = %s", (email, student_id))
-    #commit the transaction
-    conn.commit()
-    #close the cursor and the connection
-    cur.close()
-    conn.close()
+    try:
+        #connect to the database
+        conn = connect()
+        #create a cursor object
+        cur = conn.cursor()
+        #execute an UPDATE statement
+        cur.execute("UPDATE students SET email = %s WHERE student_id = %s", (email, student_id))
+        #commit the transaction
+        conn.commit()
+    except psycopg2.Error as e:
+        print(f"Error while updating data in the database: {e}")
+    finally:
+        #close the cursor and the connection
+        cur.close()
+        conn.close()
 
 # function that deletes a student from the database
 def deleteStudent(student_id):
-    #connect to the database
-    conn = connect()
-    #create a cursor object
-    cur = conn.cursor()
-    #execute a DELETE statement
-    cur.execute("DELETE FROM students WHERE student_id = %s", (student_id,))
-    #commit the transaction
-    conn.commit()
-    #close the cursor and the connection
-    print("Deleted student with id: ", student_id)
-    #close the cursor and the connection
-    cur.close()
-    conn.close()
+    try:
+        #connect to the database
+        conn = connect()
+        #create a cursor object
+        cur = conn.cursor()
+        #execute a DELETE statement
+        cur.execute("DELETE FROM students WHERE student_id = %s", (student_id,))
+        #commit the transaction
+        conn.commit()
+        #print the results
+        print("Deleted student with id: ", student_id)
+    except psycopg2.Error as e:
+        print(f"Error while deleting data from the database: {e}")
+    finally:
+        #close the cursor and the connection
+        cur.close()
+        conn.close()
 
 def main():
-
     #creating menu for user thats repeat until user exits
     print("Welcome to the Student Management System by Arhaan Wazid!")
 
